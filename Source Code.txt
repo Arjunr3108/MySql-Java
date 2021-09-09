@@ -1,0 +1,98 @@
+package pack;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+ class Mysql {
+   public static void main(String args[]) throws SQLException {
+      DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+      String mysqlUrl = "jdbc:mysql://localhost/";
+      try(Connection con = DriverManager.getConnection(mysqlUrl, "root", "Admin-007");
+    		  Statement stmt = con.createStatement();){
+    	  System.out.println("Connection established......");
+    	  String query; 
+    	  query = "CREATE database MyDatabase";
+    	  stmt.execute(query);
+    	  System.out.println("Database created");
+    	  
+    	  query = "USE mydatabase";
+    	  stmt.execute(query);
+    	  System.out.println("Using MyDatabase...");
+    	  
+    	  query = "CREATE TABLE Movies(Movie_Name VARCHAR(50),Lead_Actor VARCHAR(50),Actress VARCHAR(50),Year_of_Release YEAR(4),Director_Name VARCHAR(50));";
+    	  stmt.execute(query);
+    	  System.out.println("Table Created");
+    	  
+    	  query = "INSERT INTO Movies (Movie_Name,Lead_Actor,Actress,Year_of_Release,Director_Name) VALUES (\"Man of Steel\",\"Henry Cavill\",\"Amy Adams\",'2013',\"Zack Snyder\")";
+    	  stmt.execute(query);
+    	  System.out.println("Row Inserted");
+      
+    	  query = "INSERT INTO Movies (Movie_Name,Lead_Actor,Actress,Year_of_Release,Director_Name) VALUES (\"Pirates of the Caribbean\",\"Johnny Depp\",\"Will Turner\",'2003',\"Gore Verbinski\");\r\n"
+    			  + "";
+    	  stmt.execute(query);
+    	  System.out.println("Row Inserted");
+    	  
+    	  query = "INSERT INTO Movies (Movie_Name,Lead_Actor,Actress,Year_of_Release,Director_Name) VALUES (\"The Tomorrow War\",\"Chris Pratt\",\"Yvonne Strahovski\",'2021',\"Chris McKay\");\r\n"
+    			  + "";
+    	  stmt.execute(query);
+    	  System.out.println("Row Inserted");
+    	  
+    	  query = "INSERT INTO Movies (Movie_Name,Lead_Actor,Actress,Year_of_Release,Director_Name) VALUES (\"Guardians of the Galaxy\",\"Chris Pratt\",\"Zoe Saldana\",'2014',\"James Gunn\");\r\n"
+    			  + "";
+    	  stmt.execute(query);
+    	  System.out.println("Row Inserted");
+    	  
+    	  query = "INSERT INTO Movies (Movie_Name,Lead_Actor,Actress,Year_of_Release,Director_Name) VALUES (\"The Fast and the Furious\",\"Paul Walker\",\"Jordana Brewster\",'2001',\"Rob Cohen\");\r\n"
+    			  + "";
+    	  stmt.execute(query);
+    	  System.out.println("Row Inserted");
+    	  
+    	  query = "INSERT INTO Movies (Movie_Name,Lead_Actor,Actress,Year_of_Release,Director_Name) VALUES (\"Iron Man\",\"Robert Downey Jr.\",\"Gwyneth Paltrow\",'2008',\"Jon Favreau\");\r\n"
+    			  + ""
+    			  + "";
+    	  stmt.execute(query);
+    	  System.out.println("Row Inserted");
+    	  
+    	  ResultSet rs;
+    	  
+    	  query = "SELECT Movie_Name,Lead_Actor,Actress,Year_of_Release,Director_Name FROM Movies;\r\n"
+    			  + "";
+    	  rs = stmt.executeQuery(query);
+    	  System.out.println("\nTable :");
+    	  
+    	  while(rs.next()){      
+    		  System.out.print("Movie Name: " + rs.getString("Movie_Name"));
+    		  System.out.print(", Lead Actor: " + rs.getString("Lead_Actor"));
+    		  System.out.print(", Actress: " + rs.getString("Actress"));
+    		  System.out.print(", Year of Release: " + rs.getInt("Year_of_Release"));
+    		  System.out.println(", Director Name: " + rs.getString("Director_Name"));
+    	  }
+    	  
+    	  query = "SELECT Movie_Name,Lead_Actor,Actress,Year_of_Release,Director_Name FROM Movies WHERE Lead_Actor = \"Chris Pratt\";\r\n"
+    			  + ""
+            		+ "";
+    	  rs = stmt.executeQuery(query);
+    	  System.out.println("\nTable :");
+        
+    	  while(rs.next()){      
+    		  	System.out.print("Movie Name: " + rs.getString("Movie_Name"));
+    		  	System.out.print(", Lead Actor: " + rs.getString("Lead_Actor"));
+    		  	System.out.print(", Actress: " + rs.getString("Actress"));
+    		  	System.out.print(", Year of Release: " + rs.getInt("Year_of_Release"));
+    		  	System.out.println(", Director Name: " + rs.getString("Director_Name"));
+    	  }
+    	  rs.close();
+    	  stmt.close();
+    	  con.close();
+      }
+      catch (SQLException e) {
+    		  e.printStackTrace();
+      }
+      catch(Exception e){
+    	e.printStackTrace();
+    	}
+    	System.out.println("\nProgram Terminated.  Good Bye !");
+   }
+}
